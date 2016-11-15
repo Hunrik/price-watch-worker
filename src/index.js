@@ -41,24 +41,24 @@ const process = (resp) => {
     }, resolve)
   })
 }
-const getQueue = Promise.coroutine(function * () {
+const getQueue = async function () {
   if (!shouldProcess) return
   const req = {
     QueueUrl: QueueUrl,
     MaxNumberOfMessages: config.concurrency
   }
   try {
-    const resp = yield sqs.receiveMessageAsync(req)
+    const resp = await sqs.receiveMessageAsync(req)
     if (!resp.Messages) {
       shouldProcess = false
       return console.log('Empty queue')
     }
-    yield process(resp.Messages)
+    await process(resp.Messages)
     return getQueue()
   } catch (e) {
     return console.log(e)
   }
-})
+}
 const timeout = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -91,13 +91,13 @@ const handler = Promise.coroutine(function * (event, context) {
     } } catch (e) {
       callback(new Error(e))
     }
-}
+})
 handler()
 const benchmarker = () => {
-  console.log('Benchmark: ', Math.round(benchmark / 3))
+  console.log('Benchmark: ', Math.round(benchmark / 6))
   benchmark = 0
   if (!shouldProcess) return
-  setTimeout(benchmarker, 3000)
+  setTimeout(benchmarker, 6000)
 }
 benchmarker()
 

@@ -151,12 +151,11 @@ var findByDomain = exports.findByDomain = function findByDomain(domain) {
  * @returns {Promise<Site[]>}
  */
 var list = exports.list = function list() {
-  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var _ref2$skip = _ref2.skip;
-  var skip = _ref2$skip === undefined ? 0 : _ref2$skip;
-  var _ref2$limit = _ref2.limit;
-  var limit = _ref2$limit === undefined ? 50 : _ref2$limit;
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref2$skip = _ref2.skip,
+      skip = _ref2$skip === undefined ? 0 : _ref2$skip,
+      _ref2$limit = _ref2.limit,
+      limit = _ref2$limit === undefined ? 50 : _ref2$limit;
 
   return new _bluebird2.default(function (resolve, reject) {
     Site.scan().limit(limit).startAt(skip).exec().then(resolve).catch(reject);

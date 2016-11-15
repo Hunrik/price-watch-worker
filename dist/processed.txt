@@ -1,0 +1,378 @@
+Statistical profiling result from isolate-0x103000000-v8.log, (790 ticks, 78 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+     10    1.3%          /usr/lib/system/libsystem_kernel.dylib
+      5    0.6%          /usr/lib/system/libsystem_platform.dylib
+      4    0.5%          /usr/lib/system/libsystem_pthread.dylib
+      4    0.5%          /usr/lib/system/libsystem_malloc.dylib
+      2    0.3%          /usr/lib/system/libsystem_c.dylib
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+     25    3.2%    3.3%  LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+     24    3.0%    3.1%  Builtin: ArgumentsAdaptorTrampoline
+     21    2.7%    2.7%  LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     18    2.3%    2.4%  Builtin: CompileLazy
+     15    1.9%    2.0%  LazyCompile: *tryConvertToPromise /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/thenables.js:7:29
+     15    1.9%    2.0%  Builtin: CallFunction_ReceiverIsAny
+     12    1.5%    1.6%  Stub: FastNewClosureStub
+     11    1.4%    1.4%  LazyCompile: ~Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+     11    1.4%    1.4%  LazyCompile: *timeout /Users/Hunrik/Work/shop-parser/src/yieldTest.js:3:17
+     11    1.4%    1.4%  Builtin: ResumeGeneratorTrampoline
+     11    1.4%    1.4%  Builtin: FunctionPrototypeHasInstance
+     10    1.3%    1.3%  Stub: JSEntryStub
+      8    1.0%    1.0%  Builtin: JSEntryTrampoline
+      7    0.9%    0.9%  Stub: CEntryStub
+      7    0.9%    0.9%  LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      7    0.9%    0.9%  LazyCompile: *Promise._resolveFromExecutor /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:476:51
+      7    0.9%    0.9%  Builtin: CallFunction_ReceiverIsNotNullOrUndefined
+      5    0.6%    0.7%  LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      5    0.6%    0.7%  LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      5    0.6%    0.7%  LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      4    0.5%    0.5%  Stub: FastNewStrictArgumentsStub
+      3    0.4%    0.4%  Stub: FastNewFunctionContextStub
+      3    0.4%    0.4%  LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      3    0.4%    0.4%  LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+      3    0.4%    0.4%  Builtin: Apply
+      2    0.3%    0.3%  Stub: InstanceOfStub
+      2    0.3%    0.3%  LazyCompile: *Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      2    0.3%    0.3%  LazyCompile: *Promise._fulfill /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:623:39
+      2    0.3%    0.3%  Builtin: Call_ReceiverIsAny
+      1    0.1%    0.1%  Stub: CompareICStub
+      1    0.1%    0.1%  LazyCompile: ~stripBOM internal/module.js:47:18
+      1    0.1%    0.1%  LazyCompile: ~debugs.(anonymous function) util.js:154:29
+      1    0.1%    0.1%  LazyCompile: ~Module._compile module.js:513:37
+      1    0.1%    0.1%  LazyCompile: ~Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      1    0.1%    0.1%  Handler: _resolveCallback
+      1    0.1%    0.1%  Builtin: GeneratorPrototypeNext
+      1    0.1%    0.1%  Builtin: CallFunction_ReceiverIsNullOrUndefined
+
+ [C++]:
+   ticks  total  nonlib   name
+     38    4.8%    5.0%  v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, bool, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*, v8::internal::Handle<v8::internal::Object>)
+     32    4.1%    4.2%  v8::internal::StackFrameIterator::StackFrameIterator(v8::internal::Isolate*, v8::internal::ThreadLocalTop*)
+     31    3.9%    4.1%  v8::internal::Object::GetMethod(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::Name>)
+     30    3.8%    3.9%  v8::internal::LookupIterator::State v8::internal::LookupIterator::LookupInRegularHolder<false>(v8::internal::Map*, v8::internal::JSReceiver*)
+     25    3.2%    3.3%  v8::internal::Object::InstanceOf(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>)
+     21    2.7%    2.7%  node::ContextifyScript::New(v8::FunctionCallbackInfo<v8::Value> const&)
+     18    2.3%    2.4%  v8::internal::LookupIterator::FetchValue() const
+     16    2.0%    2.1%  v8::internal::Factory::NewBlockContext(v8::internal::Handle<v8::internal::JSFunction>, v8::internal::Handle<v8::internal::Context>, v8::internal::Handle<v8::internal::ScopeInfo>)
+     14    1.8%    1.8%  void v8::internal::LookupIterator::NextInternal<false>(v8::internal::Map*, v8::internal::JSReceiver*)
+     14    1.8%    1.8%  v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+     13    1.6%    1.7%  v8::internal::Runtime_SuspendJSGeneratorObject(int, v8::internal::Object**, v8::internal::Isolate*)
+     13    1.6%    1.7%  v8::internal::Runtime_PushBlockContext(int, v8::internal::Object**, v8::internal::Isolate*)
+     13    1.6%    1.7%  node::Read(v8::FunctionCallbackInfo<v8::Value> const&)
+     10    1.3%    1.3%  v8::internal::InnerPointerToCodeCache::GetCacheEntry(unsigned char*)
+      9    1.1%    1.2%  v8::internal::Object::GetProperty(v8::internal::LookupIterator*)
+      9    1.1%    1.2%  v8::internal::Heap::AllocateRaw(int, v8::internal::AllocationSpace, v8::internal::AllocationAlignment)
+      9    1.1%    1.2%  v8::internal::Execution::Call(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*)
+      8    1.0%    1.0%  void v8::internal::LookupIterator::Start<false>()
+      8    1.0%    1.0%  v8::internal::JavaScriptFrame::SaveOperandStack(v8::internal::FixedArray*) const
+      7    0.9%    0.9%  v8::internal::JavaScriptFrameIterator::Advance()
+      6    0.8%    0.8%  v8::internal::Heap::AllocateFixedArray(int, v8::internal::PretenureFlag)
+      5    0.6%    0.7%  v8::internal::Factory::NewFixedArray(int, v8::internal::PretenureFlag)
+      3    0.4%    0.4%  v8::internal::StackFrame::ComputeType(v8::internal::StackFrameIteratorBase const*, v8::internal::StackFrame::State*)
+      2    0.3%    0.3%  v8::internal::String::CalculateLineEnds(v8::internal::Handle<v8::internal::String>, bool)
+      2    0.3%    0.3%  v8::internal::StoreBuffer::MoveEntriesToRememberedSet()
+      2    0.3%    0.3%  v8::internal::Runtime_CreateObjectLiteral(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.3%    0.3%  v8::internal::PerIsolateAssertScope<(v8::internal::PerIsolateAssertType)1, false>::IsAllowed(v8::internal::Isolate*)
+      2    0.3%    0.3%  v8::internal::JsonStringifier::Result v8::internal::JsonStringifier::Serialize_<false>(v8::internal::Handle<v8::internal::Object>, bool, v8::internal::Handle<v8::internal::Object>)
+      2    0.3%    0.3%  v8::internal::ExitFrame::ComputeCallerState(v8::internal::StackFrame::State*) const
+      2    0.3%    0.3%  node::Binding(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.1%    0.1%  void std::__1::vector<v8::internal::compiler::BasicBlock*, v8::internal::zone_allocator<v8::internal::compiler::BasicBlock*> >::__push_back_slow_path<v8::internal::compiler::BasicBlock* const&>(v8::internal::compiler::BasicBlock* const&&&)
+      1    0.1%    0.1%  v8::internal::compiler::Verifier::Run(v8::internal::compiler::Graph*, v8::internal::compiler::Verifier::Typing, v8::internal::compiler::Verifier::CheckInputs)
+      1    0.1%    0.1%  v8::internal::compiler::Typer::Visitor::Reduce(v8::internal::compiler::Node*)
+      1    0.1%    0.1%  v8::internal::compiler::Node::New(v8::internal::Zone*, unsigned int, v8::internal::compiler::Operator const*, int, v8::internal::compiler::Node* const*, bool)
+      1    0.1%    0.1%  v8::internal::compiler::CodeGenerator::AssembleArchInstruction(v8::internal::compiler::Instruction*)
+      1    0.1%    0.1%  v8::internal::compiler::CodeAssembler::CodeAssembler(v8::internal::Isolate*, v8::internal::Zone*, v8::internal::CallInterfaceDescriptor const&, unsigned int, char const*, unsigned long)
+      1    0.1%    0.1%  v8::internal::WasmJs::Install(v8::internal::Isolate*, v8::internal::Handle<v8::internal::JSGlobalObject>)
+      1    0.1%    0.1%  v8::internal::UniqueSet<v8::internal::Map>::Add(v8::internal::Unique<v8::internal::Map>, v8::internal::Zone*)
+      1    0.1%    0.1%  v8::internal::ToBooleanIC::ToBoolean(v8::internal::Handle<v8::internal::Object>)
+      1    0.1%    0.1%  v8::internal::String::SlowFlatten(v8::internal::Handle<v8::internal::ConsString>, v8::internal::PretenureFlag)
+      1    0.1%    0.1%  v8::internal::SharedFunctionInfo::InitFromFunctionLiteral(v8::internal::Handle<v8::internal::SharedFunctionInfo>, v8::internal::FunctionLiteral*)
+      1    0.1%    0.1%  v8::internal::Script::GetPositionInfo(int, v8::internal::Script::PositionInfo*, v8::internal::Script::OffsetFlag)
+      1    0.1%    0.1%  v8::internal::ScavengeVisitor::VisitPointers(v8::internal::Object**, v8::internal::Object**)
+      1    0.1%    0.1%  v8::internal::Scanner::ScanIdentifierOrKeyword()
+      1    0.1%    0.1%  v8::internal::Runtime_TypedArrayInitialize(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.1%    0.1%  v8::internal::Runtime::RuntimeFunctionTable(v8::internal::Isolate*)
+      1    0.1%    0.1%  v8::internal::PropertyHandlerCompiler::CheckPrototypes(v8::internal::Register, v8::internal::Register, v8::internal::Register, v8::internal::Register, v8::internal::Handle<v8::internal::Name>, v8::internal::Label*, v8::internal::PrototypeCheckType, v8::internal::ReturnHolder)
+      1    0.1%    0.1%  v8::internal::ParserBase<v8::internal::Parser>::ParseUnaryExpression(v8::internal::ExpressionClassifier<v8::internal::ParserBaseTraits<v8::internal::Parser> >*, bool*)
+      1    0.1%    0.1%  v8::internal::ParserBase<v8::internal::Parser>::ParseMemberWithNewPrefixesExpression(v8::internal::ExpressionClassifier<v8::internal::ParserBaseTraits<v8::internal::Parser> >*, bool*, bool*)
+      1    0.1%    0.1%  v8::internal::ParserBase<v8::internal::Parser>::ParseMemberExpressionContinuation(v8::internal::Expression*, bool*, v8::internal::ExpressionClassifier<v8::internal::ParserBaseTraits<v8::internal::Parser> >*, bool*)
+      1    0.1%    0.1%  v8::internal::ParserBase<v8::internal::Parser>::ParseAssignmentExpression(bool, v8::internal::ExpressionClassifier<v8::internal::ParserBaseTraits<v8::internal::Parser> >*, bool*)
+      1    0.1%    0.1%  v8::internal::ParserBase<v8::internal::Parser>::BindingPatternUnexpectedToken(v8::internal::ExpressionClassifier<v8::internal::ParserBaseTraits<v8::internal::Parser> >*)
+      1    0.1%    0.1%  v8::internal::Parser::ParseProgram(v8::internal::Isolate*, v8::internal::ParseInfo*)
+      1    0.1%    0.1%  v8::internal::MarkCompactCollector::Initialize()
+      1    0.1%    0.1%  v8::internal::MacroAssembler::Movsd(v8::internal::Operand const&, v8::internal::XMMRegister)
+      1    0.1%    0.1%  v8::internal::LookupIterator::GetDataValue() const
+      1    0.1%    0.1%  v8::internal::Log::MessageBuilder::Append(char const*, ...)
+      1    0.1%    0.1%  v8::internal::LChunkBuilder::DoConstant(v8::internal::HConstant*)
+      1    0.1%    0.1%  v8::internal::JSObject::WriteToField(int, v8::internal::PropertyDetails, v8::internal::Object*)
+      1    0.1%    0.1%  v8::internal::JSObject::AddProperty(v8::internal::Handle<v8::internal::JSObject>, v8::internal::Handle<v8::internal::Name>, v8::internal::Handle<v8::internal::Object>, v8::internal::PropertyAttributes)
+      1    0.1%    0.1%  v8::internal::Isolate::UpdateArrayProtectorOnSetElement(v8::internal::Handle<v8::internal::JSObject>)
+      1    0.1%    0.1%  v8::internal::InnerPointerToCodeCache::GcSafeFindCodeForInnerPointer(unsigned char*)
+      1    0.1%    0.1%  v8::internal::Heap::SelectGarbageCollector(v8::internal::AllocationSpace, char const**)
+      1    0.1%    0.1%  v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags)
+      1    0.1%    0.1%  v8::internal::Heap::AllocateMap(v8::internal::InstanceType, int, v8::internal::ElementsKind)
+      1    0.1%    0.1%  v8::internal::HLoadEliminationTable::KillIfMisaligned(v8::internal::HStoreNamedField*)
+      1    0.1%    0.1%  v8::internal::HInstructionMap::Resize(int, v8::internal::Zone*)
+      1    0.1%    0.1%  v8::internal::HGraphBuilder::CreateGraph()
+      1    0.1%    0.1%  v8::internal::Genesis::Genesis(v8::internal::Isolate*, v8::internal::MaybeHandle<v8::internal::JSGlobalProxy>, v8::Local<v8::ObjectTemplate>, v8::ExtensionConfiguration*, unsigned long, v8::internal::GlobalContextType)
+      1    0.1%    0.1%  v8::internal::FuncNameInferrer::PushVariableName(v8::internal::AstRawString const*)
+      1    0.1%    0.1%  v8::internal::FullCodeGenerator::VarOperand(v8::internal::Variable*, v8::internal::Register)
+      1    0.1%    0.1%  v8::internal::Deserializer::ReadData(v8::internal::Object**, v8::internal::Object**, int, unsigned char*)
+      1    0.1%    0.1%  v8::internal::DeclarationScope::AllocateParameter(v8::internal::Variable*, int)
+      1    0.1%    0.1%  v8::internal::Context::set_global_proxy(v8::internal::JSObject*)
+      1    0.1%    0.1%  v8::internal::Code::CopyFrom(v8::internal::CodeDesc const&)
+      1    0.1%    0.1%  v8::internal::Bootstrapper::Iterate(v8::internal::ObjectVisitor*)
+      1    0.1%    0.1%  v8::internal::AstTyper::NarrowType(v8::internal::Expression*, v8::internal::Bounds)
+      1    0.1%    0.1%  v8::internal::Assembler::immediate_arithmetic_op_8(unsigned char, v8::internal::Register, v8::internal::Immediate)
+      1    0.1%    0.1%  v8::TryCatch::~TryCatch()
+      1    0.1%    0.1%  v8::HandleScope::Initialize(v8::Isolate*)
+      1    0.1%    0.1%  node::LStat(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.1%    0.1%  node::InternalModuleReadFile(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.1%    0.1%  node::ContextifyScript::RunInThisContext(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.1%    0.1%  _ENGINE_get_default_RAND
+
+ [Summary]:
+   ticks  total  nonlib   name
+    267   33.8%   34.9%  JavaScript
+    420   53.2%   54.9%  C++
+      9    1.1%    1.2%  GC
+     25    3.2%          Shared libraries
+     78    9.9%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+    199   48.1%   25.2%  v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+     78   18.8%    9.9%  v8::internal::Runtime_SuspendJSGeneratorObject(int, v8::internal::Object**, v8::internal::Isolate*)
+     43   10.4%    5.4%  v8::internal::Runtime_PushBlockContext(int, v8::internal::Object**, v8::internal::Isolate*)
+     39    9.4%    4.9%  v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     12    2.9%    1.5%  v8::internal::Runtime_CompileLazy(int, v8::internal::Object**, v8::internal::Isolate*)
+      7    1.7%    0.9%  v8::internal::Runtime_Interrupt(int, v8::internal::Object**, v8::internal::Isolate*)
+      5    1.2%    0.6%  v8::internal::Runtime_KeyedStoreIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      4    1.0%    0.5%  v8::internal::Runtime_CompileOptimized_Concurrent(int, v8::internal::Object**, v8::internal::Isolate*)
+      3    0.7%    0.4%  v8::internal::Runtime_StoreIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Runtime_ToBooleanIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Runtime_StackGuard(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Runtime_SetProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Runtime_NewObject(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Runtime_CreateObjectLiteral(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Runtime_BinaryOpIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Builtin_JsonStringify(int, v8::internal::Object**, v8::internal::Isolate*)
+      2    0.5%    0.3%  v8::internal::Builtin_FunctionConstructor(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_TypedArrayInitialize(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_TryInstallOptimizedCode(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_SetPrototype(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_RegExpExec(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_KeyedGetProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_CompileForOnStackReplacement(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Runtime_CompareIC_Miss(int, v8::internal::Object**, v8::internal::Isolate*)
+      1    0.2%    0.1%  v8::internal::Builtin_ObjectDefineProperty(int, v8::internal::Object**, v8::internal::Isolate*)
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 2.0% are not shown.
+
+   ticks parent  name
+     78    9.9%  UNKNOWN
+
+     38    4.8%  v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, bool, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*, v8::internal::Handle<v8::internal::Object>)
+     38  100.0%    v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+     15   39.5%      LazyCompile: *tryConvertToPromise /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/thenables.js:7:29
+     15  100.0%        LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     15  100.0%          LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     15  100.0%            LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+     12   31.6%      LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     12  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     12  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+     12  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      7   18.4%      LazyCompile: *Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      7  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      7  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      7  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      4   10.5%      LazyCompile: ~Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      4  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      4  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      4  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+
+     32    4.1%  v8::internal::StackFrameIterator::StackFrameIterator(v8::internal::Isolate*, v8::internal::ThreadLocalTop*)
+     32  100.0%    v8::internal::Runtime_SuspendJSGeneratorObject(int, v8::internal::Object**, v8::internal::Isolate*)
+     32  100.0%      LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+     32  100.0%        Builtin: GeneratorPrototypeNext
+     32  100.0%          LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+     32  100.0%            LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+
+     31    3.9%  v8::internal::Object::GetMethod(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::Name>)
+     31  100.0%    v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+     12   38.7%      LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     12  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     12  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+     12  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+     10   32.3%      LazyCompile: *tryConvertToPromise /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/thenables.js:7:29
+     10  100.0%        LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     10  100.0%          LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     10  100.0%            LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      7   22.6%      LazyCompile: ~Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      7  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      7  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      6   85.7%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      1   14.3%            LazyCompile: ~Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      2    6.5%      LazyCompile: *Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      2  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      2  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      2  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+
+     30    3.8%  v8::internal::LookupIterator::State v8::internal::LookupIterator::LookupInRegularHolder<false>(v8::internal::Map*, v8::internal::JSReceiver*)
+     30  100.0%    v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+     12   40.0%      LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     12  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     12  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+     12  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      8   26.7%      LazyCompile: ~Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      8  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      8  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      8  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      7   23.3%      LazyCompile: *tryConvertToPromise /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/thenables.js:7:29
+      7  100.0%        LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+      7  100.0%          LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      7  100.0%            LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      3   10.0%      LazyCompile: *Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      3  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      3  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      3  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+
+     25    3.2%  v8::internal::Object::InstanceOf(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>)
+     25  100.0%    v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+     11   44.0%      LazyCompile: *tryConvertToPromise /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/thenables.js:7:29
+     11  100.0%        LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     11  100.0%          LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     11  100.0%            LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      7   28.0%      LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+      7  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      7  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      7  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      5   20.0%      LazyCompile: ~Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      5  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      5  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      5  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      2    8.0%      LazyCompile: *Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      2  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      2  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      2  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+
+     25    3.2%  LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+     24   96.0%    Builtin: GeneratorPrototypeNext
+     24  100.0%      LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+     24  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     24  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+     24  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      1    4.0%    LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+      1  100.0%      LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      1  100.0%        LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      1  100.0%          LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      1  100.0%            LazyCompile: ~Async.drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:16:33
+
+     24    3.0%  Builtin: ArgumentsAdaptorTrampoline
+      5   20.8%    LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      5  100.0%      LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      5  100.0%        LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      5  100.0%          LazyCompile: ~Async.drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:16:33
+      5  100.0%            LazyCompile: ~runCallback timers.js:631:21
+      5   20.8%    LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      5  100.0%      LazyCompile: *Promise._resolveFromExecutor /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:476:51
+      5  100.0%        LazyCompile: *timeout /Users/Hunrik/Work/shop-parser/src/yieldTest.js:3:17
+      5  100.0%          LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+      5  100.0%            Builtin: GeneratorPrototypeNext
+      4   16.7%    LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      4  100.0%      LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      4  100.0%        LazyCompile: *Promise._resolveFromExecutor /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:476:51
+      4  100.0%          LazyCompile: *timeout /Users/Hunrik/Work/shop-parser/src/yieldTest.js:3:17
+      4  100.0%            LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+      3   12.5%    LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      3  100.0%      LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      3  100.0%        LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      3  100.0%          LazyCompile: *Promise._resolveFromExecutor /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:476:51
+      3  100.0%            LazyCompile: *timeout /Users/Hunrik/Work/shop-parser/src/yieldTest.js:3:17
+      3   12.5%    LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      3  100.0%      LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      3  100.0%        LazyCompile: ~Async.drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:16:33
+      3  100.0%          LazyCompile: ~runCallback timers.js:631:21
+      3  100.0%            LazyCompile: ~tryOnImmediate timers.js:606:24
+      2    8.3%    LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+      2  100.0%      Builtin: GeneratorPrototypeNext
+      2  100.0%        LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+      2  100.0%          LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      2  100.0%            LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      2    8.3%    Builtin: GeneratorPrototypeNext
+      2  100.0%      LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+      2  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      2  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      2  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+
+     21    2.7%  node::ContextifyScript::New(v8::FunctionCallbackInfo<v8::Value> const&)
+     21  100.0%    v8::internal::Builtin_HandleApiCall(int, v8::internal::Object**, v8::internal::Isolate*)
+     15   71.4%      LazyCompile: ~runInThisContext bootstrap_node.js:429:28
+     15  100.0%        LazyCompile: ~NativeModule.compile bootstrap_node.js:511:44
+     15  100.0%          LazyCompile: ~NativeModule.require bootstrap_node.js:445:34
+      4   26.7%            LazyCompile: ~startup bootstrap_node.js:12:19
+      2   13.3%            Function: ~<anonymous> util.js:1:11
+      2   13.3%            Function: ~<anonymous> tty.js:1:11
+      2   13.3%            Function: ~<anonymous> module.js:1:11
+      1    6.7%            LazyCompile: ~setupGlobalVariables bootstrap_node.js:192:32
+      1    6.7%            LazyCompile: ~setupGlobalTimeouts bootstrap_node.js:226:31
+      1    6.7%            LazyCompile: ~get bootstrap_node.js:248:20
+      1    6.7%            Function: ~<anonymous> stream.js:1:11
+      1    6.7%            Function: ~<anonymous> buffer.js:1:11
+      6   28.6%      LazyCompile: ~exports.runInThisContext vm.js:77:36
+      6  100.0%        LazyCompile: ~Module._compile module.js:513:37
+      6  100.0%          LazyCompile: ~Module._extensions..js module.js:580:37
+      6  100.0%            LazyCompile: ~Module.load module.js:481:33
+
+     21    2.7%  LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+     21  100.0%    LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+     21  100.0%      LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+     21  100.0%        LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+     21  100.0%          LazyCompile: ~Async.drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:16:33
+     21  100.0%            LazyCompile: ~runCallback timers.js:631:21
+
+     18    2.3%  v8::internal::LookupIterator::FetchValue() const
+     18  100.0%    v8::internal::Runtime_InstanceOf(int, v8::internal::Object**, v8::internal::Isolate*)
+      7   38.9%      LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+      7  100.0%        LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      7  100.0%          LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      7  100.0%            LazyCompile: ~Async._drainQueues /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:147:41
+      5   27.8%      LazyCompile: *tryConvertToPromise /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/thenables.js:7:29
+      5  100.0%        LazyCompile: *PromiseSpawn._continue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:131:45
+      5  100.0%          LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+      5  100.0%            LazyCompile: *Async._drainQueue /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/async.js:134:39
+      4   22.2%      LazyCompile: ~Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      4  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      4  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      4  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      2   11.1%      LazyCompile: *Promise._resolveCallback /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:426:46
+      2  100.0%        LazyCompile: ~<anonymous> /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:481:45
+      2  100.0%          LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      2  100.0%            LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+
+     18    2.3%  Builtin: CompileLazy
+     12   66.7%    LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+     12  100.0%      LazyCompile: *Promise._resolveFromExecutor /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:476:51
+     12  100.0%        LazyCompile: *timeout /Users/Hunrik/Work/shop-parser/src/yieldTest.js:3:17
+     12  100.0%          LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+     12  100.0%            Builtin: GeneratorPrototypeNext
+      6   33.3%    LazyCompile: ~resolve /Users/Hunrik/Work/shop-parser/src/yieldTest.js:4:22
+      6  100.0%      LazyCompile: *Promise._execute /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/debuggability.js:297:38
+      6  100.0%        LazyCompile: *Promise._resolveFromExecutor /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/promise.js:476:51
+      6  100.0%          LazyCompile: *timeout /Users/Hunrik/Work/shop-parser/src/yieldTest.js:3:17
+      6  100.0%            LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+
+     16    2.0%  v8::internal::Factory::NewBlockContext(v8::internal::Handle<v8::internal::JSFunction>, v8::internal::Handle<v8::internal::Context>, v8::internal::Handle<v8::internal::ScopeInfo>)
+     16  100.0%    v8::internal::Runtime_PushBlockContext(int, v8::internal::Object**, v8::internal::Isolate*)
+     16  100.0%      LazyCompile: <anonymous> /Users/Hunrik/Work/shop-parser/src/yieldTest.js:6:43
+     16  100.0%        Builtin: GeneratorPrototypeNext
+     16  100.0%          LazyCompile: *tryCatcher /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/util.js:12:20
+     16  100.0%            LazyCompile: *PromiseSpawn._promiseFulfilled /Users/Hunrik/Work/shop-parser/node_modules/bluebird/js/release/generators.js:94:52
+
