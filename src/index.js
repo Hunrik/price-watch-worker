@@ -56,55 +56,15 @@ const getQueue = async function () {
     await process(resp.Messages)
     return getQueue()
   } catch (e) {
-    return console.log(e)
+    console.log(e)
+    return getQueue()
   }
 }
-const timeout = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
-//exports.handler = async function (event, context, callback) {
-const handler = Promise.coroutine(function * (event, context) {
-  try {
-    getQueue()
-    yield timeout(250000)
-    // await timeout(25000)
-    const params = {
-      AttributeNames: [
-        'ApproximateNumberOfMessages'
-      ],
-      QueueUrl: QueueUrl
-    }
-    shouldProcess = false
-    let remaining = yield sqs.getQueueAttributesAsync(params)
-    remaining = remaining.Attributes.ApproximateNumberOfMessages
-    console.log('Messages:')
-    console.log(remaining)
-    if (remaining === '0') {
-      // sendMail()
-      return
-    } else {
-      console.log('Restart')
-      shouldProcess = true
-      benchmarker()
-      return restart()
-    } } catch (e) {
-      callback(new Error(e))
-    }
-})
-handler()
 const benchmarker = () => {
-  console.log('Benchmark: ', Math.round(benchmark / 6))
+  console.log('Benchmark: ', Math.round(benchmark / 10))
   benchmark = 0
   if (!shouldProcess) return
-  setTimeout(benchmarker, 6000)
+  setTimeout(benchmarker, 10000)
 }
 benchmarker()
-
-const restart = () => {
-  let options = {
-    uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod/shop-parser-production',
-    headers: {'x-api-key': '8XGbYeQwSqa5TwanMAJP6QMH1Ix0Yrj6ax5vQoW8'}
-  }
-  Request(options)
-}
