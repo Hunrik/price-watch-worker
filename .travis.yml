@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+- '6'
+install:
+- yarn
+- npm run build
+before_deploy:
+- cd dist
+deploy:
+  provider: lambda
+  function_name: shop-parser-production
+  role: arn:aws:iam::284590800778:role/deployer
+  handler_name: index.handler
+  region: eu-central-1
+  access_key_id:
+    secure: ebWVnfc6mrudq7ahxyPbUfp4T1+lRYJtKk1r/1y++rx2hfWbVPczEN2Evj74hfFMBKajuj+cUtFz3tEG+8c7wa9JGcwUMfOiM4iona9ayGQrsQZWIxq9bU+uDLfrgIGk5M0rSxFTCT9PCd+BlzzQ1X0ho1ACnUXlG3kUK3AZ7bld1teYgNhV9BH0NhebJIa0dTukHStLbt83ie5QZQEjWQTQuCBFc3bEGYfbKfSYR5Ag9xPuQEN8DjeZ2/kz8nzJzLNMkbD3AEBzlDObCphSHurPyGz9L9boMU7bqVM4Y79tAbft2SH0EA4zTdC7YLUHuNrFN4P9sI0p7JvB64G2YohCOkPeL7sD5LbDyg6yfNERE+Awi3sE9znn7487YK8ZLQS4mM4A1CJbXK3sqNKK7lGfkwLXwCPnN7wJGxB1Csyya978rLR0q5k2Hc+AVKMbqhtCF1Z0WdQh5VLFwHXtt14Fsh8y4YOhJX0O6JNEaylUE9CyG1kXuCMjbS/KHID6Tz3w3QGBlXk+BEEOXGlY+G1riTciQE7ndkW4u65qinQWcU0Nf+e/UJ3nFgmu5W/Cl1vFPxOFK4zY7FSPBglhMbAHaC3nw8F4e6YVK9fk94U+YT2IWdxMt9DTtLyM4QrODkXMCUZjaJRp6FLMoWCI6+6/63ruE+RJBx4yQLLTQNQ=
+  secret_access_key:
+    secure: pbgC2DYgwHMA6VklBCthzgKI8vZBpfwAGwdJRQy783VpxT3nLHNrhQf3qrGqJcK5bmd8gGg3nuuF5SkwMqfVzhbOuCBPaAFhyrKgxXpnPj0CNHHoY0oYXly1R6WVrQkWQ6k2pEMHDhMt7KEGAhTegFdeioHREi5F7H0YyvAZpH2ovhgRkcg9jmyOtYDhIMH8a72LAfmbmvpZ/g4puP/ZUC6gMxpSynZAD86Z9m4h+efXscVvu3Tgcrwqo7ExWpjiSXJU3DVajzoWnCUQsrWOoRIbl0qYZmS3+5LTzd7A1+jxDVUmKMQQY17poIQ8oab+b+L63QTYeYFZ8HKXiuCd4NXLLpi5SYlVti9yGeOw2V/aznFmvO+ig3P/eVH2Wcf8FJ1cgq4I+w9ukRG5YTX+YUOvI+4Ivy/4i74d6uz0hnZPcaJBCtxHpchuu2xVFlXic49sj/4CYesIXvG4gawzLoEUW4PySaxZKsKtMYEqd0YanvwD1UGl3AYzRuMYVYQzDoUFgn1dR53SzORXOYxV7MHf8bEzEstTnnOOb1Hl1fFZO5coh2YZ7Dot/sp4E6UtJap1xJIxDp2IjBxrBMS+5gqjgNcEKvPlCqiE2ADu9vGBmxF0PDPs/2g1NIIb013mqQ08ZhHuxeu9YlHFTcLj8U7LRXcL1/Zco+2rXXar+uY=
+  timeout: 300
+  memory_size: 256
+  runtime: nodejs4.3
