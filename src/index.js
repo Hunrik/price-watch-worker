@@ -63,7 +63,7 @@ const timeout = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-exports.handler = async function (event, context, callback) {
+exports.start = async function (event, context, callback) {
 // const handler = Promise.coroutine(function * (event, context) {
   try {
     getQueue()
