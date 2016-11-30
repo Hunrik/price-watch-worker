@@ -6,8 +6,9 @@
   "scripts": {
     "start": "babel-node index.js --presets es2015,stage-0 --ignore node_modules,public",
     "serve": "node dist/index.js",
+    "lint": "eslint src/",
     "build": "babel src --out-dir ./dist --presets es2015,stage-0 --copy-files --ignore node_modules",
-    "test": "mocha --compilers js:babel-register"
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",

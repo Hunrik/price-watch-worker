@@ -1,6 +1,6 @@
 import Cheerio from 'cheerio'
 import Request from 'request-promise'
-import ProductSchema, * as Product from './productSchema'
+import ProductSchema from './productSchema'
 import * as SiteSchema from './siteSchema'
 
 export const priceCheck = (data) => {
@@ -23,7 +23,7 @@ export const priceCheck = (data) => {
       }
       let $ = Cheerio.load(response.body)
       // const price = $('.offerPrice .newPrice').contents().first().text().replace(/\D/, '')
-      const price = $(site.priceSelector[0]).contents().first().text().replace(/\D/, '').replace(/[^0-9\.]+/g, '')
+      const price = $(site.priceSelector[0]).contents().first().text().replace(/\D/, '').replace(/[^0-9.]+/g, '')
       // const name = $('.marketplaceOfferPage .offerTitle').contents().first().text().split(/\s/g).filter((n) => n).join(' ')
       const name = $(site.productNameSelector[0]).contents().first().text().split(/\s/g).filter((n) => n).join(' ')
 
@@ -37,13 +37,13 @@ export const priceCheck = (data) => {
       }
       if (!product.price) product.price = []
       console.log(product.price.concat([price]))
-      //product.productName = name
+      // product.productName = name
       const schema = {
         prices: product.price,
-        productName: name,
+        productName: name
       }
       await ProductSchema.update({url: data.url, domainName: data.domainName}, schema)
-      //await product.save()
+      // await product.save()
       return resolve()
     } catch (e) {
       console.log(e)
@@ -51,9 +51,3 @@ export const priceCheck = (data) => {
     }
   })
 }
-async function findProduct (url, domain, pid) {
-  const product = await Product.findByPID(domain, pid)
-  if (product.length > 0) return product
-  return await Product.findByURL(url)
-}
-

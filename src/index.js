@@ -1,5 +1,5 @@
 import { priceCheck } from './priceCheck'
-import { sendMail } from './sendMail'
+// import { sendMail } from './sendMail' Enable it later
 import { SiteProcessor } from './siteProcessor'
 import AWS from 'aws-sdk'
 import config from './config.js'
@@ -63,11 +63,11 @@ const timeout = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-//exports.handler = async function (event, context, callback) {
-const handler = Promise.coroutine(function * (event, context) {
+exports.handler = async function (event, context, callback) {
+// const handler = Promise.coroutine(function * (event, context) {
   try {
     getQueue()
-    yield timeout(250000)
+    await timeout(250000)
     // await timeout(25000)
     const params = {
       AttributeNames: [
@@ -76,7 +76,7 @@ const handler = Promise.coroutine(function * (event, context) {
       QueueUrl: QueueUrl
     }
     shouldProcess = false
-    let remaining = yield sqs.getQueueAttributesAsync(params)
+    let remaining = await sqs.getQueueAttributesAsync(params)
     remaining = remaining.Attributes.ApproximateNumberOfMessages
     console.log('Messages:')
     console.log(remaining)
@@ -88,11 +88,12 @@ const handler = Promise.coroutine(function * (event, context) {
       shouldProcess = true
       benchmarker()
       return restart()
-    } } catch (e) {
-      callback(new Error(e))
     }
+  } catch (e) {
+    callback(new Error(e))
+  }
 }
-handler()
+
 const benchmarker = () => {
   console.log('Benchmark: ', Math.round(benchmark / 3))
   benchmark = 0

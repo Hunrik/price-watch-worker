@@ -48,7 +48,8 @@ export const SiteProcessor = (data) => {
       return resolve()
     } catch (e) {
       reject(e)
-    } })
+    }
+  })
 }
 
 const isProduct = ($, site) => {
