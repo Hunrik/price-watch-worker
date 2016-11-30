@@ -19,3 +19,4 @@ deploy:
   timeout: 300
   memory_size: 256
   runtime: nodejs4.3
+cache: yarn
