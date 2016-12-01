@@ -23,7 +23,7 @@ const process = (resp) => {
             ReceiptHandle: message.ReceiptHandle
           })
         })
-        .then(callback)
+        .then(callback).catch(console.error)
       }
       if (type === 'product') {
         priceCheck(data)
@@ -34,7 +34,7 @@ const process = (resp) => {
             ReceiptHandle: message.ReceiptHandle
           })
         })
-        .then(callback)
+        .then(callback).catch(console.error)
       }
     }, resolve)
   })
