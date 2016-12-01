@@ -2,7 +2,7 @@ import * as SiteSchema from './siteSchema'
 import Cheerio from 'cheerio'
 import Request from 'request-promise'
 import AWS from 'aws-sdk'
-import config from './config'
+// import config from './config'
 import Promise from 'bluebird'
 const sqs = new AWS.SQS()
 Promise.promisifyAll(Object.getPrototypeOf(sqs))
