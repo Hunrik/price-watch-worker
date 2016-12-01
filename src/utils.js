@@ -9,7 +9,7 @@ Promise.promisifyAll(Object.getPrototypeOf(sqs))
 
 export const getSite = (domain) => {
   return SiteSchema.findByDomain(domain).then(site => {
-    if (!site || !site.enabled) throw new Error({ err: 'Not found in database', ur: domain })
+    if (!site || !site.enabled) throw new Error(`Not found in database, url: ${domain}`)
     return site
   })
 }
@@ -21,12 +21,11 @@ export const getBody = async (url) => {
     time: true
   }
   return Request(options).then(response => {
-    if (/^3/.test(response.statusCode) || response.request.uri.href !== url.href) {
-      console.log('Redirected from: ', url.href)
-      addToSqs(response.request.uri.href)
-      throw new Error({ err: 'Redirected', url: url })
+    if (/^3/.test(response.statusCode) || response.request.uri.href !== url) {
+      //addToSqs(response.request.uri.href)
+      throw new Error(`Redirected, url: ${url}`)
     } else if (/^[45]/.test(response.statusCode)) {
-      throw new Error({ err: 'Server error', url: url, code: response.statusCode })
+      throw new Error(`Server error, url: ${url}, code: ${response.statusCode}`)
     }
     return Cheerio.load(response.body)
   })
@@ -42,7 +41,6 @@ export const getDiff = (a, b) => {
   return 100 - (a / b * 100)
 }
 const addToSqs = (url) => {
-  console.log('Redirected to: ', url)
   const payload = {
     type: 'page',
     data: url
