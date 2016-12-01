@@ -44,6 +44,7 @@ const process = (resp) => {
   })
 }
 const getQueue = Promise.coroutine(function *() {
+  client.increment('worker.started')
   if (!shouldProcess) return
   const req = {
     QueueUrl: config.sqsUrl,
