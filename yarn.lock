@@ -1867,6 +1867,10 @@ hooks@0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/hooks/-/hooks-0.3.2.tgz#a31f060c2026cea6cf1ca3eb178430e718e1c4a3"
 
+hot-shots@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/hot-shots/-/hot-shots-4.3.1.tgz#58a6c1ff717f25673be4d2f736d1c94d5d79e239"
+
 htmlparser2@^3.9.1:
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"

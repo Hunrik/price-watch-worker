@@ -1,81 +1,24 @@
 'use strict';
 
-var _regenerator = require('babel-runtime/regenerator');
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-var getQueue = function () {
-  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
-    var req, resp;
-    return _regenerator2.default.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            if (shouldProcess) {
-              _context.next = 2;
-              break;
-            }
-
-            return _context.abrupt('return');
-
-          case 2:
-            req = {
-              QueueUrl: QueueUrl,
-              MaxNumberOfMessages: _config2.default.concurrency
-            };
-            _context.prev = 3;
-            _context.next = 6;
-            return sqs.receiveMessageAsync(req);
-
-          case 6:
-            resp = _context.sent;
-
-            if (resp.Messages) {
-              _context.next = 10;
-              break;
-            }
-
-            shouldProcess = false;
-            return _context.abrupt('return', console.log('Empty queue'));
-
-          case 10:
-            _context.next = 12;
-            return process(resp.Messages);
-
-          case 12:
-            return _context.abrupt('return', getQueue());
-
-          case 15:
-            _context.prev = 15;
-            _context.t0 = _context['catch'](3);
-            return _context.abrupt('return', console.log(_context.t0));
-
-          case 18:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, this, [[3, 15]]);
-  }));
-
-  return function getQueue() {
-    return _ref.apply(this, arguments);
-  };
-}();
-
 var _priceCheck = require('./priceCheck');
 
-var _sendMail = require('./sendMail');
+var _priceCheck2 = _interopRequireDefault(_priceCheck);
 
 var _siteProcessor = require('./siteProcessor');
+
+var _siteProcessor2 = _interopRequireDefault(_siteProcessor);
 
 var _awsSdk = require('aws-sdk');
 
@@ -97,35 +40,43 @@ var _requestPromise = require('request-promise');
 
 var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _hotShots = require('hot-shots');
 
-var QueueUrl = 'https://sqs.eu-central-1.amazonaws.com/284590800778/Parser';
+var _hotShots2 = _interopRequireDefault(_hotShots);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+var client = new _hotShots2.default();
+// import { sendMail } from './sendMail' Enable it later
+
+
 var sqs = new _awsSdk2.default.SQS();
 _bluebird2.default.promisifyAll((0, _getPrototypeOf2.default)(sqs));
 var shouldProcess = true;
-var benchmark = 0;
+
 var process = function process(resp) {
   return new _bluebird2.default(function (resolve, reject) {
     (0, _each2.default)(resp, function (message, callback) {
-      var _JSON$parse = JSON.parse(message.Body);
-
-      var data = _JSON$parse.data;
-      var type = _JSON$parse.type;
+      var _JSON$parse = JSON.parse(message.Body),
+          data = _JSON$parse.data,
+          type = _JSON$parse.type;
 
       if (type === 'page') {
-        (0, _siteProcessor.SiteProcessor)(data).then(function () {
-          benchmark++;
+        (0, _siteProcessor2.default)(data).then(function () {
+          client.increment('worker.processed');
           return sqs.deleteMessageAsync({
-            QueueUrl: QueueUrl,
+            QueueUrl: _config2.default.sqsUrl,
             ReceiptHandle: message.ReceiptHandle
           });
         }).then(callback);
       }
       if (type === 'product') {
-        (0, _priceCheck.priceCheck)(data).then(function () {
-          benchmark++;
+        (0, _priceCheck2.default)(data).then(function () {
+          client.increment('worker.processed');
           return sqs.deleteMessageAsync({
-            QueueUrl: QueueUrl,
+            QueueUrl: _config2.default.sqsUrl,
             ReceiptHandle: message.ReceiptHandle
           });
         }).then(callback);
@@ -133,17 +84,72 @@ var process = function process(resp) {
     }, resolve);
   });
 };
+var getQueue = _bluebird2.default.coroutine(_regenerator2.default.mark(function _callee() {
+  var req, resp;
+  return _regenerator2.default.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          if (shouldProcess) {
+            _context.next = 2;
+            break;
+          }
 
-var timeout = function timeout(ms) {
-  return new _bluebird2.default(function (resolve) {
-    return setTimeout(resolve, ms);
+          return _context.abrupt('return');
+
+        case 2:
+          req = {
+            QueueUrl: _config2.default.sqsUrl,
+            MaxNumberOfMessages: _config2.default.concurrency
+          };
+          _context.prev = 3;
+          _context.next = 6;
+          return sqs.receiveMessageAsync(req);
+
+        case 6:
+          resp = _context.sent;
+
+          if (resp.Messages) {
+            _context.next = 10;
+            break;
+          }
+
+          shouldProcess = false;
+          return _context.abrupt('return', console.log('Queue emptied'));
+
+        case 10:
+          _context.next = 12;
+          return process(resp.Messages);
+
+        case 12:
+          return _context.abrupt('return', getQueue());
+
+        case 15:
+          _context.prev = 15;
+          _context.t0 = _context['catch'](3);
+
+          console.error(_context.t0);
+          return _context.abrupt('return', getQueue());
+
+        case 19:
+        case 'end':
+          return _context.stop();
+      }
+    }
+  }, _callee, this, [[3, 15]]);
+}));
+
+var queueCheck = function queueCheck() {
+  var params = {
+    AttributeNames: ['ApproximateNumberOfMessages'],
+    QueueUrl: _config2.default.sqsUrl
+  };
+  return sqs.getQueueAttributesAsync(params).then(function (remaining) {
+    return remaining.Attributes.ApproximateNumberOfMessages;
   });
 };
-
-//exports.handler = async function (event, context, callback) {
-var handler = function () {
-  var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(event, context) {
-    var params, remaining;
+exports.start = function () {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(event, context, callback) {
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -151,75 +157,97 @@ var handler = function () {
             _context2.prev = 0;
 
             getQueue();
-            _context2.next = 4;
-            return timeout(250000);
+            setTimeout(restart, 250 * 1000);
 
-          case 4:
-            // await timeout(25000)
-            params = {
-              AttributeNames: ['ApproximateNumberOfMessages'],
-              QueueUrl: QueueUrl
-            };
+          case 3:
+            _context2.next = 5;
+            return queueCheck();
 
-            shouldProcess = false;
-            _context2.next = 8;
-            return sqs.getQueueAttributesAsync(params);
+          case 5:
+            _context2.t0 = _context2.sent;
 
-          case 8:
-            remaining = _context2.sent;
-
-            remaining = remaining.Attributes.ApproximateNumberOfMessages;
-            console.log('Messages:');
-            console.log(remaining);
-
-            if (!(remaining === '0')) {
-              _context2.next = 16;
+            if (!(_context2.t0 > 0)) {
+              _context2.next = 11;
               break;
             }
 
-            return _context2.abrupt('return');
+            _context2.next = 9;
+            return _bluebird2.default.delay(10 * 1000);
 
-          case 16:
-            console.log('Restart');
-            shouldProcess = true;
-            benchmarker();
-            return _context2.abrupt('return', restart());
-
-          case 20:
-            _context2.next = 25;
+          case 9:
+            _context2.next = 3;
             break;
 
-          case 22:
-            _context2.prev = 22;
-            _context2.t0 = _context2['catch'](0);
+          case 11:
+            shouldProcess = false;
+            return _context2.abrupt('return', callback());
 
-            callback(new Error(_context2.t0));
+          case 15:
+            _context2.prev = 15;
+            _context2.t1 = _context2['catch'](0);
 
-          case 25:
+            console.error(_context2.t1);
+            callback(new Error(_context2.t1));
+
+          case 19:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[0, 22]]);
+    }, _callee2, undefined, [[0, 15]]);
   }));
 
-  return function handler(_x, _x2) {
+  return function (_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+var restart = function () {
+  var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3() {
+    var options;
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.t0 = !shouldProcess;
+
+            if (_context3.t0) {
+              _context3.next = 6;
+              break;
+            }
+
+            _context3.next = 4;
+            return queueCheck();
+
+          case 4:
+            _context3.t1 = _context3.sent;
+            _context3.t0 = _context3.t1 === 0;
+
+          case 6:
+            if (!_context3.t0) {
+              _context3.next = 8;
+              break;
+            }
+
+            return _context3.abrupt('return');
+
+          case 8:
+            options = {
+              uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod/',
+              headers: { 'x-api-key': _config2.default.lambdaKey }
+            };
+
+            (0, _requestPromise2.default)(options);
+
+          case 10:
+          case 'end':
+            return _context3.stop();
+        }
+      }
+    }, _callee3, undefined);
+  }));
+
+  return function restart() {
     return _ref2.apply(this, arguments);
   };
 }();
-handler();
-var benchmarker = function benchmarker() {
-  console.log('Benchmark: ', Math.round(benchmark / 3));
-  benchmark = 0;
-  if (!shouldProcess) return;
-  setTimeout(benchmarker, 3000);
-};
-benchmarker();
-
-var restart = function restart() {
-  var options = {
-    uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod/shop-parser-production',
-    headers: { 'x-api-key': '8XGbYeQwSqa5TwanMAJP6QMH1Ix0Yrj6ax5vQoW8' }
-  };
-  (0, _requestPromise2.default)(options);
-};

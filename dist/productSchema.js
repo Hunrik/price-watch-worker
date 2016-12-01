@@ -13,7 +13,9 @@ var _dynamoose = require('dynamoose');
 
 var _dynamoose2 = _interopRequireDefault(_dynamoose);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 /**
  * Site Schema

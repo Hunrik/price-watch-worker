@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - '6'
+- '6'
 before_script:
-  - npm install
+- npm install
 script:
-  - npm run test
-  - npm run build
+- npm run test
+- npm run build
 before_deploy:
-  - cp -r node_modules ./dist
-  - cd dist
+- cp -r node_modules ./dist
+- cd dist
 deploy:
   provider: lambda
   function_name: shop-parser-production
@@ -23,3 +23,6 @@ deploy:
   memory_size: 256
   runtime: nodejs4.3
 cache: yarn
+env:
+  LAMBDA_KEY:
+    secure: b0KD4jhP5NUnp1dr6cWCvGvPceT5CMXnuoqxzcGJEyY4IU/OcDSCaw+q7NXkBdJutEkLJdHXS6wZk+nkVG0w4ZCEc8/1b8eyMEt1LiwA3q8htfdVOkNxtUVqoakyOqiTgUU/vbSc3UGeFeuozOg6Z2MewTom458/uKxfFCoIrs7ZhCgyHNHVgvYtaui34IeFjN4aF0MgnTPjybgb3Iavk2LQ3DatZda363K+ms3IsgihqFKLwnKzfBdXE+Fod5YvqQUaRhw1PrRpUQRaa3KQ5R2qeqTHiMpkBTs65qNUFq0dcbsJTTx7aTQ6Is90OXXd+rJAc+RANCnMuBSWqlyjWP+PmvUzvZO7isr4Soq/eadQqv9hM2dUavwf8DHmnhsmhUJW4EhZBVyDPgflVcjJYq42/ftNO6w1CUd2WBITis6QIEpDrLGlybd3oe/2uSEKpVt8Zp41uRThI7vYlIDNBardzS3NuhoejdZN+zCVmVTFVfopqN0IO9HsbbBXmxTdvVAFqKXWa8QyEi8mSNMEjnD1xnQwbicat3PEFY5EvQxOcfcv5WqcvcqxyZd57BXBwAK4Zirt2IFw5RLsoHw6Pt4pZe2USOZWHhs0kZNP3gZJjRGE2k7q28c3wgAKXFbA5jlKuNjintGF4+In5JG6VuMnZM89BRwLRQLP9hUIiow=

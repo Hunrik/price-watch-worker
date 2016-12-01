@@ -3,198 +3,103 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SiteProcessor = undefined;
-
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
 
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
-var _awsSdk = require('aws-sdk');
-
-var _awsSdk2 = _interopRequireDefault(_awsSdk);
 
 var _url = require('url');
 
 var _url2 = _interopRequireDefault(_url);
 
-var _cheerio = require('cheerio');
+var _diffSchema = require('./diffSchema');
 
-var _cheerio2 = _interopRequireDefault(_cheerio);
+var _diffSchema2 = _interopRequireDefault(_diffSchema);
 
-var _requestPromise = require('request-promise');
-
-var _requestPromise2 = _interopRequireDefault(_requestPromise);
-
-var _productSchema = require('./productSchema');
-
-var Product = _interopRequireWildcard(_productSchema);
-
-var _siteSchema = require('./siteSchema');
-
-var SiteSchema = _interopRequireWildcard(_siteSchema);
+var _utils = require('./utils');
 
 var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _config = require('./config');
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-var _config2 = _interopRequireDefault(_config);
+exports.default = function () {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(data) {
+    var url, _Promise$all, _Promise$all2, site, $, price, name, _data;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            url = _url2.default.parse(data);
+            _Promise$all = _bluebird2.default.all([(0, _utils.getSite)(url.hostname), (0, _utils.getBody)(url.href)]), _Promise$all2 = (0, _slicedToArray3.default)(_Promise$all, 2), site = _Promise$all2[0], $ = _Promise$all2[1];
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+            if (!(0, _utils.isProduct)($, site)) {
+              _context.next = 13;
+              break;
+            }
 
-var sqs = new _awsSdk2.default.SQS();
-_bluebird2.default.promisifyAll((0, _getPrototypeOf2.default)(sqs));
-var SiteProcessor = exports.SiteProcessor = function SiteProcessor(data) {
-  return new _bluebird2.default(function () {
-    var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(resolve, reject) {
-      var url, site, options, response, $, isProductPage, pid, _data;
+            price = $(site.priceSelector[0]).contents().first().text().replace(/\D/, '').replace(/[^0-9.]+/g, '');
+            name = $(site.productNameSelector[0]).contents().first().text().split(/\s/g).filter(function (n) {
+              return n;
+            }).join(' ');
 
-      return _regenerator2.default.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              url = _url2.default.parse(data);
-              _context.next = 4;
-              return SiteSchema.findByDomain(url.hostname);
+            if (price) {
+              _context.next = 8;
+              break;
+            }
 
-            case 4:
-              site = _context.sent;
+            throw new Error({ err: 'Price not found', url: url.href });
 
-              if (!(!site || !site.enabled)) {
-                _context.next = 8;
-                break;
-              }
+          case 8:
+            if (name) {
+              _context.next = 10;
+              break;
+            }
 
-              console.log('Site not found in mongo');
-              return _context.abrupt('return', reject({ err: 'Not found in mongo' }));
+            throw new Error({ err: 'Product name not found', url: url.href });
 
-            case 8:
-              options = {
-                uri: url.href,
-                resolveWithFullResponse: true,
-                time: true
-              };
-              _context.next = 11;
-              return (0, _requestPromise2.default)(options);
+          case 10:
+            _data = {
+              oldPrice: price,
+              url: url.href,
+              productName: name,
+              domainName: url.hostname,
+              difference: 0,
+              updatedAt: Date.now()
+            };
+            _context.next = 13;
+            return _diffSchema2.default.update({ url: url.href, domainName: url.hostname }, _data);
 
-            case 11:
-              response = _context.sent;
+          case 13:
+            return _context.abrupt('return');
 
-              if (!(/^3/.test(response.statusCode) || response.request.uri.href !== url.href)) {
-                _context.next = 18;
-                break;
-              }
+          case 16:
+            _context.prev = 16;
+            _context.t0 = _context['catch'](0);
+            throw new Error(_context.t0);
 
-              console.log('Redirected from: ', url.href);
-              addToSqs(response.request.uri.href);
-              return _context.abrupt('return', reject('Redirected'));
-
-            case 18:
-              if (!/^[45]/.test(response.statusCode)) {
-                _context.next = 20;
-                break;
-              }
-
-              return _context.abrupt('return', reject('Server sent error', response.statusCode));
-
-            case 20:
-              $ = _cheerio2.default.load(response.body);
-              isProductPage = isProduct($, site);
-
-              if (!isProductPage) {
-                _context.next = 27;
-                break;
-              }
-
-              pid = getProductId($, site);
-              _data = {
-                // url: url.href,
-                // domainName: url.hostname,
-                productId: pid || -1,
-                updatedAt: Date.now()
-              };
-              _context.next = 27;
-              return Product.default.update({ url: url.href, domainName: url.hostname }, _data);
-
-            case 27:
-              isProductPage ? process.stdout.write('+') : process.stdout.write('-');
-              // process.stdout.write((isProductPage ? '+' : '-'))
-              return _context.abrupt('return', resolve());
-
-            case 31:
-              _context.prev = 31;
-              _context.t0 = _context['catch'](0);
-
-              reject(_context.t0);
-
-            case 34:
-            case 'end':
-              return _context.stop();
-          }
+          case 19:
+          case 'end':
+            return _context.stop();
         }
-      }, _callee, this, [[0, 31]]);
-    }));
+      }
+    }, _callee, undefined, [[0, 16]]);
+  }));
 
-    return function (_x, _x2) {
-      return _ref.apply(this, arguments);
-    };
-  }());
-};
-
-var isProduct = function isProduct($, site) {
-  var selectors = site.productPageSelector;
-  return selectors.some(function (selector) {
-    return $(selector).length > 0;
-  });
-};
-var getProductId = function getProductId($, site) {
-  var selectors = site.productIdSelector;
-  if (!selectors) return false;
-  if (selectors.length === 0) {
-    console.log('no Selector');
-    return -1;
-  }
-  var productId = -1;
-  selectors.some(function (selector) {
-    var elem = $(selector);
-    // Exit if not found
-    if (elem.length === 0) return false;
-    // <input name='something' value='pid' />
-    if (elem.get(0).tagName === 'input') {
-      productId = elem.val();
-      // <a onClick='...pid...'
-    } else if (elem.get(0).tagName === 'a') {
-      productId = elem.attr('onclick').replace(/\D/g, '');
-    }
-    return productId;
-  });
-  return productId;
-};
-var addToSqs = function addToSqs(url) {
-  console.log('Redirected to: ', url);
-  var payload = {
-    type: 'page',
-    data: url
+  return function (_x) {
+    return _ref.apply(this, arguments);
   };
-  var sqsData = {
-    QueueUrl: _config2.default.sqsUrl,
-    MessageBody: (0, _stringify2.default)(payload)
-  };
-  sqs.sendMessageAsync(sqsData);
-};
+}();

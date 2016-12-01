@@ -1,17 +1,19 @@
-import { priceCheck } from './priceCheck'
+import priceCheck from './priceCheck'
 // import { sendMail } from './sendMail' Enable it later
-import { SiteProcessor } from './siteProcessor'
+import SiteProcessor from './siteProcessor'
 import AWS from 'aws-sdk'
 import config from './config.js'
 import each from 'async/each'
 import Promise from 'bluebird'
 import Request from 'request-promise'
+import StatsD from 'hot-shots'
 
-const QueueUrl = 'https://sqs.eu-central-1.amazonaws.com/284590800778/Parser'
+const client = new StatsD()
+
 const sqs = new AWS.SQS()
 Promise.promisifyAll(Object.getPrototypeOf(sqs))
 var shouldProcess = true
-var benchmark = 0
+
 const process = (resp) => {
   return new Promise((resolve, reject) => {
     each(resp, function (message, callback) {
@@ -19,9 +21,9 @@ const process = (resp) => {
       if (type === 'page') {
         SiteProcessor(data)
         .then(() => {
-          benchmark++
+          client.increment('worker.processed')
           return sqs.deleteMessageAsync({
-            QueueUrl,
+            QueueUrl: config.sqsUrl,
             ReceiptHandle: message.ReceiptHandle
           })
         })
@@ -30,9 +32,9 @@ const process = (resp) => {
       if (type === 'product') {
         priceCheck(data)
         .then(() => {
-          benchmark++
+          client.increment('worker.processed')
           return sqs.deleteMessageAsync({
-            QueueUrl,
+            QueueUrl: config.sqsUrl,
             ReceiptHandle: message.ReceiptHandle
           })
         })
@@ -41,71 +43,57 @@ const process = (resp) => {
     }, resolve)
   })
 }
-const getQueue = Promise.coroutine(function * () {
+const getQueue = Promise.coroutine(function *() {
   if (!shouldProcess) return
   const req = {
-    QueueUrl: QueueUrl,
+    QueueUrl: config.sqsUrl,
     MaxNumberOfMessages: config.concurrency
   }
   try {
     const resp = yield sqs.receiveMessageAsync(req)
     if (!resp.Messages) {
       shouldProcess = false
-      return console.log('Empty queue')
+      return console.log('Queue emptied')
     }
     yield process(resp.Messages)
     return getQueue()
   } catch (e) {
-    return console.log(e)
+    console.error(e)
+    return getQueue()
   }
 })
-const timeout = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
-exports.start = async function (event, context, callback) {
-// const handler = Promise.coroutine(function * (event, context) {
+const queueCheck = () => {
+  const params = {
+    AttributeNames: [
+      'ApproximateNumberOfMessages'
+    ],
+    QueueUrl: config.sqsUrl
+  }
+  return sqs.getQueueAttributesAsync(params).then(remaining => {
+    return remaining.Attributes.ApproximateNumberOfMessages
+  })
+}
+exports.start = async (event, context, callback) => {
   try {
     getQueue()
-    await timeout(250000)
-    // await timeout(25000)
-    const params = {
-      AttributeNames: [
-        'ApproximateNumberOfMessages'
-      ],
-      QueueUrl: QueueUrl
+    setTimeout(restart, 250 * 1000)
+    while (await queueCheck() > 0) {
+      await Promise.delay(10 * 1000)
     }
     shouldProcess = false
-    let remaining = await sqs.getQueueAttributesAsync(params)
-    remaining = remaining.Attributes.ApproximateNumberOfMessages
-    console.log('Messages:')
-    console.log(remaining)
-    if (remaining === '0') {
-      // sendMail()
-      return
-    } else {
-      console.log('Restart')
-      shouldProcess = true
-      benchmarker()
-      return restart()
-    }
+    return callback()
   } catch (e) {
+    console.error(e)
     callback(new Error(e))
   }
 }
 
-const benchmarker = () => {
-  console.log('Benchmark: ', Math.round(benchmark / 3))
-  benchmark = 0
-  if (!shouldProcess) return
-  setTimeout(benchmarker, 3000)
-}
-benchmarker()
-
-const restart = () => {
+const restart = async () => {
+  if (!shouldProcess || await queueCheck() === 0) return
   let options = {
-    uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod/shop-parser-production',
-    headers: {'x-api-key': '8XGbYeQwSqa5TwanMAJP6QMH1Ix0Yrj6ax5vQoW8'}
+    uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod/',
+    headers: {'x-api-key': config.lambdaKey}
   }
   Request(options)
 }
