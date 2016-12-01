@@ -20,7 +20,6 @@ export default async (data) => {
       }
       await Product.update({url: url.href, domainName: url.hostname}, data)
     }
-
       // process.stdout.write((isProductPage ? '+' : '-'))
     return
   } catch (e) {
