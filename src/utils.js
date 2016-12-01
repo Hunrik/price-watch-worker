@@ -22,7 +22,7 @@ export const getBody = async (url) => {
   }
   return Request(options).then(response => {
     if (/^3/.test(response.statusCode) || response.request.uri.href !== url) {
-      //addToSqs(response.request.uri.href)
+      // addToSqs(response.request.uri.href)
       throw new Error(`Redirected, url: ${url}`)
     } else if (/^[45]/.test(response.statusCode)) {
       throw new Error(`Server error, url: ${url}, code: ${response.statusCode}`)
@@ -40,7 +40,7 @@ export const isProduct = ($, site) => {
 export const getDiff = (a, b) => {
   return 100 - (a / b * 100)
 }
-const addToSqs = (url) => {
+/* const addToSqs = (url) => {
   const payload = {
     type: 'page',
     data: url
@@ -50,5 +50,5 @@ const addToSqs = (url) => {
     MessageBody: JSON.stringify(payload)
   }
   sqs.sendMessageAsync(sqsData)
-}
+} */
 
