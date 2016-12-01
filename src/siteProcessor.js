@@ -26,7 +26,7 @@ export default async (data) => {
       // process.stdout.write((isProductPage ? '+' : '-'))
     return
   } catch (e) {
-    throw new Error(e)
+    return console.error(e)
   }
 }
 
