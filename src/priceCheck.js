@@ -9,8 +9,8 @@ export default async (data) => {
       // const name = $('.marketplaceOfferPage .offerTitle').contents().first().text().split(/\s/g).filter((n) => n).join(' ')
     const name = $(site.productNameSelector[0]).contents().first().text().split(/\s/g).filter((n) => n).join(' ')
 
-    if (!price) throw new Error({err: 'Price not found', url: data.url})
-    if (!product) throw new Error({err: 'Product not found', url: data.url})
+    if (!price) throw new Error(`Price not found,  url: ${data.url}`)
+    if (!product) throw new Error(`Product not found, url: ${data.url}`)
 
     product.productName = name
     product.oldPrice = price === product.newPrice ? product.oldPrice : product.newPrice
@@ -21,6 +21,6 @@ export default async (data) => {
 
     return true
   } catch (e) {
-    return console.error(e)
+    return console.error(e.message)
   }
 }

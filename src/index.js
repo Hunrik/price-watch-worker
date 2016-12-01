@@ -82,7 +82,7 @@ exports.start = async (event, context, callback) => {
     return callback()
   } catch (e) {
     console.error(e)
-    callback(new Error(e))
+    callback(e)
   }
 }
 
