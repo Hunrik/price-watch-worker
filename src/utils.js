@@ -23,8 +23,7 @@ export const getBody = async (url) => {
   return Request(options).then(response => {
     if (/^3/.test(response.statusCode)) {
       // addToSqs(response.request.uri.href)
-      console.log(response.request.uri.href)
-      throw new Error(`Redirected, url: ${url}, status code: ${response.statusCode}`)
+      throw new Error({ err: 'Redirected', url: url })
     } else if (/^[45]/.test(response.statusCode)) {
       throw new Error(`Server error, url: ${url}, code: ${response.statusCode}`)
     }
