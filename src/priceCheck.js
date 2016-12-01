@@ -11,14 +11,12 @@ export default async (data) => {
 
     if (!price) throw new Error(`Price not found,  url: ${data.url}`)
     if (!product) throw new Error(`Product not found, url: ${data.url}`)
-
     product.productName = name
     product.oldPrice = price === product.newPrice ? product.oldPrice : product.newPrice
     product.newPrice = price
     product.difference = price === product.newPrice ? product.difference : getDiff(product.oldPrice, price)
     product.updatedAt = Date.now()
     await product.save()
-
     return true
   } catch (e) {
     return console.error(e.message)
