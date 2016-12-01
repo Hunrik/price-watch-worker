@@ -6,6 +6,7 @@ import config from './config.js'
 import each from 'async/each'
 import Promise from 'bluebird'
 import Request from 'request-promise'
+console.log(`MONITORING|${Date.now()}|1|count|price-watch.worker.started|`)
 
 const sqs = new AWS.SQS()
 Promise.promisifyAll(Object.getPrototypeOf(sqs))
@@ -40,7 +41,6 @@ const process = (resp) => {
   })
 }
 const getQueue = Promise.coroutine(function *() {
-  console.log(`MONITORING|${Date.now()}|1|count|price-watch.worker.started|`)
   if (!shouldProcess) return
   const req = {
     QueueUrl: config.sqsUrl,
