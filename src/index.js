@@ -6,14 +6,10 @@ import config from './config.js'
 import each from 'async/each'
 import Promise from 'bluebird'
 import Request from 'request-promise'
-import StatsD from 'hot-shots'
-
-const client = new StatsD()
 
 const sqs = new AWS.SQS()
 Promise.promisifyAll(Object.getPrototypeOf(sqs))
 var shouldProcess = true
-
 const process = (resp) => {
   return new Promise((resolve, reject) => {
     each(resp, function (message, callback) {
@@ -21,7 +17,7 @@ const process = (resp) => {
       if (type === 'page') {
         SiteProcessor(data)
         .then(() => {
-          client.increment('worker.processed')
+          console.log(`MONITORING|${Date.now()}|1|count|price-watch.worker.processed|`)
           return sqs.deleteMessageAsync({
             QueueUrl: config.sqsUrl,
             ReceiptHandle: message.ReceiptHandle
@@ -32,7 +28,7 @@ const process = (resp) => {
       if (type === 'product') {
         priceCheck(data)
         .then(() => {
-          client.increment('worker.processed')
+          console.log(`MONITORING|${Date.now()}|1|count|price-watch.worker.processed|`)
           return sqs.deleteMessageAsync({
             QueueUrl: config.sqsUrl,
             ReceiptHandle: message.ReceiptHandle
@@ -44,6 +40,7 @@ const process = (resp) => {
   })
 }
 const getQueue = Promise.coroutine(function *() {
+  console.log(`MONITORING|${Date.now()}|1|count|price-watch.worker.started|`)
   if (!shouldProcess) return
   const req = {
     QueueUrl: config.sqsUrl,
