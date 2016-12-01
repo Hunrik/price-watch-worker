@@ -1,4 +1,4 @@
-import SiteSchema from './siteSchema'
+import * as SiteSchema from './siteSchema'
 import Cheerio from 'cheerio'
 import Request from 'request-promise'
 import AWS from 'aws-sdk'
