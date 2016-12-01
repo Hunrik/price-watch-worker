@@ -21,6 +21,6 @@ export default async (data) => {
 
     return true
   } catch (e) {
-    throw new Error(e)
+    return console.error(e)
   }
 }
