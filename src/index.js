@@ -79,8 +79,8 @@ exports.start = async (event, context, callback) => {
     }
     setTimeout(restart, 250 * 1000)
     while (await queueCheck() > 0) {
-      await Promise.delay(10 * 1000)
-      console.log(`MONITORING|${Date.now()}|${benchmark / 10}|count|price-watch.worker.processed|`)
+      await Promise.delay(30 * 1000)
+      console.log(`MONITORING|${Date.now()}|${benchmark / 30}|count|price-watch.worker.processed|`)
       benchmark = 0
     }
     shouldProcess = false
@@ -94,7 +94,8 @@ exports.start = async (event, context, callback) => {
 const restart = async () => {
   if (!shouldProcess || await queueCheck() === 0) return
   let options = {
-    uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod/',
+    uri: 'https://mjl05xiv1a.execute-api.eu-central-1.amazonaws.com/prod',
+    method: 'POST',
     headers: {'x-api-key': config.lambdaKey}
   }
   Request(options)
